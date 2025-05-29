@@ -131,9 +131,7 @@ export default function Login() {
                     Don't have an account?{" "}
                     <Link to="/register">Create One</Link>
                 </div>
-                <div className="simple-footer">
-                    Copyright &copy; Stisla 2023
-                </div>
+               
             </div>
         </div>
     );
