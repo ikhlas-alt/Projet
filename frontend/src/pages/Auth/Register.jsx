@@ -201,9 +201,7 @@ export default function Register() {
                 <div className="mt-5 text-muted text-center">
                     Have an account? <Link to="/">Login here</Link>
                 </div>
-                <div className="simple-footer">
-                    Copyright &copy; Stisla 2023
-                </div>
+                
             </div>
         </div>
     );
