@@ -70,11 +70,6 @@ CREATE TABLE `products` (
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `price` decimal(10,2) NOT NULL,
-  `quantity` int(11) NOT NULL DEFAULT 0,
-  `category` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` enum('active','inactive') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'active',
-  `created_by` bigint(20) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -123,20 +118,22 @@ INSERT INTO `role_user` (`role_id`, `user_id`, `user_type`) VALUES
 (1, 3, 'App\\Models\\User'); -- Admin
 
 -- Insertion des produits
-INSERT INTO `products` (`id`, `name`, `description`, `price`, `quantity`, `category`, `image`, `status`, `created_by`, `created_at`, `updated_at`) VALUES
-(1, 'Ordinateur Portable HP', 'Ordinateur portable HP Pavilion 15.6" avec processeur Intel Core i5, 8GB RAM, 256GB SSD', 12500.00, 15, 'Informatique', 'products/hp-laptop.jpg', 'active', 1, NOW(), NOW()),
-(2, 'Smartphone Samsung Galaxy', 'Samsung Galaxy A54 5G, 128GB, Écran 6.4", Caméra 50MP', 3200.00, 25, 'Téléphonie', 'products/samsung-galaxy.jpg', 'active', 1, NOW(), NOW()),
-(3, 'Casque Audio Sony', 'Casque sans fil Sony WH-1000XM4, Réduction de bruit active', 2800.00, 10, 'Audio', 'products/sony-headphones.jpg', 'active', 1, NOW(), NOW()),
-(4, 'Tablette iPad Air', 'Apple iPad Air 10.9", 64GB, Wi-Fi, Puce M1', 6500.00, 8, 'Informatique', 'products/ipad-air.jpg', 'active', 1, NOW(), NOW()),
-(5, 'Montre Connectée Apple', 'Apple Watch Series 8, GPS, 45mm, Bracelet Sport', 4200.00, 12, 'Accessoires', 'products/apple-watch.jpg', 'active', 1, NOW(), NOW()),
-(6, 'Clavier Mécanique Logitech', 'Logitech MX Mechanical, Rétroéclairé, Sans fil', 1200.00, 20, 'Informatique', 'products/logitech-keyboard.jpg', 'active', 3, NOW(), NOW());
+
+INSERT INTO `products` (`id`, `name`, `description`, `price`, `created_at`, `updated_at`) VALUES
+(1, 'Ordinateur Portable HP', 'Ordinateur portable HP Pavilion 15.6" avec processeur Intel Core i5, 8GB RAM, 256GB SSD', 12500.00, NOW(), NOW()),
+(2, 'Smartphone Samsung Galaxy', 'Samsung Galaxy A54 5G, 128GB, Écran 6.4", Caméra 50MP', 3200.00, NOW(), NOW()),
+(3, 'Casque Audio Sony', 'Casque sans fil Sony WH-1000XM4, Réduction de bruit active', 2800.00, NOW(), NOW()),
+(4, 'Tablette iPad Air', 'Apple iPad Air 10.9", 64GB, Wi-Fi, Puce M1', 6500.00, NOW(), NOW()),
+(5, 'Montre Connectée Apple', 'Apple Watch Series 8, GPS, 45mm, Bracelet Sport', 4200.00, NOW(), NOW()),
+(6, 'Clavier Mécanique Logitech', 'Logitech MX Mechanical, Rétroéclairé, Sans fil', 1200.00, NOW(), NOW());
 
 -- Insertion des galeries
-INSERT INTO `galleries` (`id`, `title`, `description`, `image_path`, `image_name`, `image_size`, `image_type`, `alt_text`, `status`, `created_by`, `created_at`, `updated_at`) VALUES
-(1, 'Espace de Travail Moderne', 'Un bureau moderne avec setup informatique complet', 'galleries/workspace-modern.jpg', 'workspace-modern.jpg', 2048576, 'image/jpeg', 'Bureau moderne avec ordinateur et accessoires', 'active', 1, NOW(), NOW()),
-(2, 'Collection Smartphones', 'Présentation de notre gamme de smartphones', 'galleries/smartphones-collection.jpg', 'smartphones-collection.jpg', 1536000, 'image/jpeg', 'Collection de smartphones dernière génération', 'active', 1, NOW(), NOW()),
-(3, 'Setup Gaming', 'Configuration gaming complète avec éclairage RGB', 'galleries/gaming-setup.jpg', 'gaming-setup.jpg', 3072000, 'image/jpeg', 'Setup gaming avec éclairage RGB', 'active', 3, NOW(), NOW()),
-(4, 'Accessoires Apple', 'Gamme complète d\'accessoires Apple', 'galleries/apple-accessories.jpg', 'apple-accessories.jpg', 1792000, 'image/jpeg', 'Accessoires Apple Watch, AirPods, iPhone', 'active', 1, NOW(), NOW());
+
+INSERT INTO `galleries` (`id`, `name_gallery`, `description_gallery`, `image`, `created_at`, `updated_at`) VALUES
+(1, 'Espace de Travail Moderne', 'Un bureau moderne avec setup informatique complet', 'galleries/workspace-modern.jpg', NOW(), NOW()),
+(2, 'Collection Smartphones', 'Présentation de notre gamme de smartphones', 'galleries/smartphones-collection.jpg', NOW(), NOW()),
+(3, 'Setup Gaming', 'Configuration gaming complète avec éclairage RGB', 'galleries/gaming-setup.jpg', NOW(), NOW()),
+(4, 'Accessoires Apple', 'Gamme complète d\'accessoires Apple', 'galleries/apple-accessories.jpg', NOW(), NOW());
 
 -- ================================
 -- MISE À JOUR DES COMPTEURS
