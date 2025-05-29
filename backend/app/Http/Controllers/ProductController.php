@@ -7,38 +7,61 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 
+
 class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+   public function index(Request $request)
+{
+    try 
     {
-        try 
-        {
-            $perPage = $request->get('showing', 10);
-            $search = $request->get('search', '');
+        $perPage = $request->get('showing', 10);
+        $search = $request->get('search', '');
+        $minPrice = $request->get('min_price', null);
+        $maxPrice = $request->get('max_price', null);
+        $sortOrder = $request->get('sort', 'asc'); // 'asc' ou 'desc'
 
-            $data = Product::where(function($query) use ($search) {
-                        $query->where('name', 'LIKE', "%{$search}%");
-                        $query->orWhere('description', 'LIKE', "%{$search}%");
-                        $query->orWhere('price', 'LIKE', "%{$search}%");
-                    })->latest()->paginate($perPage);
+        $query = Product::query();
 
-            return response()->json([
-                'data'      => $data,
-                'success'   => true,
-            ], JsonResponse::HTTP_OK);
-        } 
-        catch (Exception $e) 
-        {
-            return response()->json([
-                'data'      => [],
-                'success'   => false,
-                'message'   => $e->getMessage()
-            ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+        // Recherche
+        if ($search) {
+            $query->where(function($q) use ($search) {
+                $q->where('name', 'LIKE', "%{$search}%")
+                  ->orWhere('description', 'LIKE', "%{$search}%")
+                  ->orWhere('price', 'LIKE', "%{$search}%");
+            });
         }
+
+        // Filtre min_price
+        if ($minPrice !== null && $minPrice !== '') {
+            $query->where('price', '>=', $minPrice);
+        }
+        // Filtre max_price
+        if ($maxPrice !== null && $maxPrice !== '') {
+            $query->where('price', '<=', $maxPrice);
+        }
+
+        // Tri par prix
+        $query->orderBy('price', $sortOrder);
+
+        $data = $query->paginate($perPage);
+
+        return response()->json([
+            'data'      => $data,
+            'success'   => true,
+        ], JsonResponse::HTTP_OK);
+    } 
+    catch (Exception $e) 
+    {
+        return response()->json([
+            'data'      => [],
+            'success'   => false,
+            'message'   => $e->getMessage()
+        ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
     }
+}
 
     /**
      * Store a newly created resource in storage.
